@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using BD_SQL;
 
 namespace Console_Bank_Alif_C_
 {
@@ -23,14 +22,21 @@ namespace Console_Bank_Alif_C_
                     System.Console.WriteLine("5->'Оформление кредита с графиком погашения'");
                     System.Console.WriteLine("6->'Выход'");
 
+                            int num=int.Parse(Console.ReadLine());
+                        if(num==1)
+                        {
+                            Sign_in();
+                        }
                 }
                      
                         
         }
 
-        static void Sign_in(SqlConnection conn)
+        static void Sign_in()
         {
             Console.Clear();
+            SqlConnection conn=new SqlConnection(Const);
+            conn.Open();
             System.Console.WriteLine("Введите свое имя:");
             string Name= Console.ReadLine();
             System.Console.WriteLine("Введите свою Фамилию:");
@@ -45,6 +51,10 @@ namespace Console_Bank_Alif_C_
             string gmail=Console.ReadLine();
             System.Console.WriteLine("Введите свой пол:");
             string sex=Console.ReadLine();
+            System.Console.WriteLine("Введите свой номер теоефона:");
+            string NumberPhone=Console.ReadLine();
+            string cmd = $"insert into Sign_in([Name],[Surname],[MiddleName],[Address],[City],[gmail],[sex],[Number_phone]values('Name','Surname','MiddleName','address','City','gmail','sex','NumberPhone'))";
+            SqlCommand cm = new SqlCommand(cmd,conn);
         }
     }
 }

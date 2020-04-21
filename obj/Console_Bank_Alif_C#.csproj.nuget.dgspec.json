@@ -38,7 +38,7 @@
           "dependencies": {
             "system.Data.SQLClient": {
               "target": "Package",
-              "version": "[*, )"
+              "version": "[4.8.1, )"
             }
           },
           "imports": [

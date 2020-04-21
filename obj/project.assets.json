@@ -450,7 +450,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "system.Data.SQLClient >= *"
+      "system.Data.SQLClient >= 4.8.1"
     ]
   },
   "packageFolders": {
@@ -490,7 +490,7 @@
         "dependencies": {
           "system.Data.SQLClient": {
             "target": "Package",
-            "version": "[*, )"
+            "version": "[4.8.1, )"
           }
         },
         "imports": [
