@@ -7,54 +7,38 @@ namespace Console_Bank_Alif_C_
     
     class Program
     {
-          const string Const = @"Data Source=localhost; Initial Catalog=master;Integrated Security=True";
+          const string Const = @"Data Source=localhost; Initial Catalog=Account_user ;Integrated Security=True";
+    SqlConnection conn =new SqlConnection();
 
-        static void Main(string[] args)
+        static void Main()
         {
-            SqlConnection conn =new SqlConnection();
-            bool work=true;
-                while(work)
-                {
-                    System.Console.WriteLine("1->'Sign in'");
-                    System.Console.WriteLine("2->'Заполнение анкеты клиента'");
-                    System.Console.WriteLine("3->'Добавление заявки на кредит клиенту'");
-                    System.Console.WriteLine("4->'можно ли взять кредит или нет'");
-                    System.Console.WriteLine("5->'Оформление кредита с графиком погашения'");
-                    System.Console.WriteLine("6->'Выход'");
-
-                            int num=int.Parse(Console.ReadLine());
-                        if(num==1)
-                        {
-                            Sign_in();
-                        }
-                }
-                     
-                        
+            System.Console.WriteLine("Добро пожаловать в Консольный мини банк от Alif_Sarmoya)");
+          
+            System.Console.WriteLine("Как вы предпочитайте зарегистрироваться:");
+           
+            System.Console.Write("Если как клиент нажмит 'Q' если как админ то 'A':");
+           string z=Console.ReadLine();
+                   if(z=="Q")
+                   {
+                       Console.Clear();
+                       System.Console.WriteLine("Вы успешно зашли как Клиент!");
+                       System.Console.WriteLine("если вы хотите узнать что вы можете сделать в качестве клиента наберите 'Fun' ");
+                       string fun=Console.ReadLine();
+                       if(fun.ToLower()=="fun")
+                       {
+                           
+                       }
+                   }
+            
+           
         }
-
-        static void Sign_in()
-        {
-            Console.Clear();
-            SqlConnection conn=new SqlConnection(Const);
-            conn.Open();
-            System.Console.WriteLine("Введите свое имя:");
-            string Name= Console.ReadLine();
-            System.Console.WriteLine("Введите свою Фамилию:");
-            string Surname=Console.ReadLine();
-            System.Console.WriteLine("Введите своe Отчество(не обязательно):");
-            string MiddleName=Console.ReadLine();
-            System.Console.WriteLine("Введите свой адрес:");
-            string address=Console.ReadLine();
-            System.Console.WriteLine("Введите свой город проживания:");
-            string City=Console.ReadLine();
-            System.Console.WriteLine("Введите свою почту:");
-            string gmail=Console.ReadLine();
-            System.Console.WriteLine("Введите свой пол:");
-            string sex=Console.ReadLine();
-            System.Console.WriteLine("Введите свой номер теоефона:");
-            string NumberPhone=Console.ReadLine();
-            string cmd = $"insert into Sign_in([Name],[Surname],[MiddleName],[Address],[City],[gmail],[sex],[Number_phone]values('Name','Surname','MiddleName','address','City','gmail','sex','NumberPhone'))";
-            SqlCommand cm = new SqlCommand(cmd,conn);
-        }
+     
     }
+
+        
 }
+           
+            
+            
+          
+
