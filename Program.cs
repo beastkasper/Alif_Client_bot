@@ -19,7 +19,7 @@ namespace Console_Bank_Alif_C_
         {
             
 
-            System.Console.WriteLine("Добро пожаловать в Консольный мини банк от Alif_Sa");
+            System.Console.WriteLine("Добро пожаловать в Консольный мини банк от Alif_Sarmoya");
         Link:
             System.Console.WriteLine("Как вы предпочитайте зарегистрироваться:");
 
@@ -75,6 +75,17 @@ namespace Console_Bank_Alif_C_
                     }
 
                 }
+                                 
+            }
+            if(z=="A")
+            {
+                System.Console.WriteLine("Вы зошли как Admin!");
+                System.Console.WriteLine("Посмотреть всю инфу о клиентах-1");
+                int n=int.Parse(Console.ReadLine());
+                if(n==1)
+                {
+                            SelectAllClients();
+                }
             }
 
         }
@@ -119,7 +130,7 @@ namespace Console_Bank_Alif_C_
           
             SqlConnection conn = new SqlConnection(Const);
             conn.Open();
-            string com=string.Format($"INSERT INTO U_Accaunt ([Name],[Surname],[MiddleName],[Address],[Gender],[Login],[RoleId],[Password],[ICard]) VALUES ('{Name}','{Surname}','{MiddleName}','{Address}','{sex}',{Tel},{rid},'{Password}','{ICard}')");
+            string com=string.Format($"INSERT INTO U_Accaunt ([Name],[Surname],[MiddleName],[Address],[Gender],[Login],[RoleId],[Password],[ICard]) VALUES ('{Name}','{Surname}','{MiddleName}','{Address}','{sex}',{Tel},{rid},'{Password}','{ICard}'");
             SqlCommand command=new SqlCommand(com,conn);
             SqlDataReader reader =command.ExecuteReader();
             System.Console.WriteLine("Вы успешно зарегистрировались!");
@@ -132,7 +143,12 @@ namespace Console_Bank_Alif_C_
             SqlConnection conn =new SqlConnection(Const);
             conn.Open();
             SqlCommand comm =new SqlCommand(Const,conn);
-
+                System.Console.WriteLine("Write your name");
+                string Name =Console.ReadLine();
+                System.Console.WriteLine("Write your Surname");
+                string Surname =Console.ReadLine();
+                System.Console.WriteLine("Write your MiddleName");
+                String MiddleName=Console.ReadLine();
             int count = 0;
             System.Console.WriteLine("Для того что бы получить кредит заполните анкету!");
             Console.Write("Сумма кредита");
@@ -208,7 +224,7 @@ namespace Console_Bank_Alif_C_
                 }
             string CommandText=$"INSERT INTO U_App ([Sex],[Fimaly_Status],[Age],[Citythenship],[goal_credit],[deadLine],[UId],[Salary],[sum],[status]) values({sex},{Fimaly_Status},{Age},{Citythenship},{gc},{dl},{ID},{Salary},{sum},'Decline')";
             if(count>=12){
-                 CommandText=$"INSERT INTO U_App ([Sex],[Fimaly_Status],[Age],[Citythenship],[goal_credit],[deadLine],[UId],[Salary],[sum],[status]) values({sex},{Fimaly_Status},{Age},{Citythenship},{gc},{dl},{ID},{Salary},{sum},'Accepted')";
+                 CommandText=$"INSERT INTO U_App ([Sex],[Fimaly_Status],[Age],[Citythenship],[goal_credit],[deadLine],[UId],[Salary],[sum],[status],[Name],[Surname],[MiddleName]) values({sex},{Fimaly_Status},{Age},{Citythenship},{gc},{dl},{ID},{Salary},{sum},'{Name}','{Surname}', '{MiddleName}',Accepted')";
             }
            SqlCommand command=new SqlCommand(CommandText,conn);
                 command=new SqlCommand(CommandText,conn);
@@ -253,7 +269,7 @@ namespace Console_Bank_Alif_C_
                
                 
                conn.Close();
-                Graph();
+                ComplateTheForm();
         }
             static void Graph()
             {
@@ -261,7 +277,7 @@ namespace Console_Bank_Alif_C_
                 System.Console.WriteLine("Оформление кредита прошло успешно!");
                  SqlConnection conn =new SqlConnection(Const);
                 conn.Open();
-                
+                System.Console.WriteLine("");
                 Console.ForegroundColor = ConsoleColor.Green;
                 System.Console.WriteLine("График погашения кредита");
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -271,7 +287,7 @@ namespace Console_Bank_Alif_C_
                 while (reader.Read())
                 {
                      double valuepermonth = Math.Round(double.Parse(reader["sum"].ToString()) / int.Parse(reader["deadLine"].ToString()));
-                     System.Console.WriteLine($"вы должны платить {valuepermonth} каждый месяц {reader["deadLine"].ToString()} месяцы. Total:{reader["deadLine"].ToString()}");
+                     System.Console.WriteLine($"вы должны платить {valuepermonth} каждый месяц {reader["deadLine"].ToString()} месяцы. Total:{reader["sum"].ToString()}");
                      
                 }
                 conn.Close();
@@ -279,7 +295,25 @@ namespace Console_Bank_Alif_C_
 
             }  
 
-
+            static void SelectAllClients()
+            {
+                SqlConnection conn =new SqlConnection(Const);
+                conn.Open();
+           // string commandText = "Select * from UserInformation";
+           // string commandText = $"SELECT u.Id, u.FirstName, u.LastName, u.MiddleName, g.Gender, u.Age, f.FamilyStatus, c.Citizen, u.LoanAmount, u.Salary, p.PurposeOfLoan, u.Status FROM UserInformation u join Gender g ON u.Gender_id = g.Id join FamilyStat f ON u.FamilyStatus_id = f.Id join Citizen c ON u.Citizen_id = c.Id join PurposeOfLoan p ON u.PurposeOfLoan_id = p.Id";
+           string commandText =$"select u.Id, u.Name, u.Surname, u.MiddeName, s.Sex, f.Fimaly_Status,u.Age, c.Citythenship, g.goal_credit, u.deadLine, u.Salary, u.sum, u.status from U_App u join Sex s ON u.Sex_Id = s.Id join Fimaly_Status f ON u.Fimaly_Status_Id = f.Id join Citythenship c ON u.Citythenship_Id = c.Id join goal_credit g ON  u.goal_credit_Id = g.id";
+            SqlCommand command = new SqlCommand(commandText, conn);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                System.Console.WriteLine($"ID:{reader.GetValue("Id")}, Name:{reader.GetValue("Name")}, Surname:{reader.GetValue("Surname")}, MiddeName:{reader.GetValue("MiddeName")},Sex:{reader.GetValue("Sex")}, Fimaly_Status:{reader.GetValue("Fimaly_Status")},Age:{reader.GetValue("Age")},Citythenship:{reader.GetValue("Citythenship")}, sum:{reader.GetValue("sum")}, Salary:{reader.GetValue("Salary")},status:{reader.GetValue("status")} ");
+                System.Console.WriteLine("================================================================================================================================================================================");
+                Console.ReadKey();
+            }
+            reader.Close();
+            conn.Close();
+            Console.ForegroundColor = ConsoleColor.White;
+            }
     }
 
 
